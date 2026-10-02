@@ -137,16 +137,17 @@ SVG_ATTR_RE = re.compile(
 )
 
 
-def extract_math(text):
+def extract_math(text, start=0):
     """コードブロック・インラインコードを避けて $..$ / $$..$$ をトークンに置換する。
 
+    start は通し番号の開始値（複数ファイル間でトークンが衝突しないようにする）。
     返り値: (トークン化済みテキスト, [(token, tex, display), ...])
     """
     found = []
 
     def _repl(display):
         def inner(m):
-            token = f"MJXTOKEN{len(found)}X"
+            token = f"MJXTOKEN{start + len(found)}X"
             found.append((token, m.group(1).strip(), display))
             return token
         return inner
@@ -309,7 +310,7 @@ def build():
         for src, dst in REPLACEMENTS.items():
             text = text.replace(src, dst)
         text = expand_chart_blocks(text, os.path.basename(f))
-        text, found = extract_math(text)
+        text, found = extract_math(text, len(math_items))
         math_items.extend(found)
         fatal = sorted(set(EMOJI_FATAL_RE.findall(text)))
         if fatal:
