@@ -116,8 +116,9 @@ MATHJAX_PKG = os.path.join(MATHJAX_PREFIX, "node_modules", "mathjax")
 TEX2SVG_JS = """
 const fs = require('fs');
 require(process.argv[2]).init({
-  loader: { load: ['input/tex', 'output/svg'] },
-  tex: { packages: { '[+]': ['ams'] } },
+  // tex-full は boldsymbol / mathtools / cancel 等を同梱する。input/tex だと
+  // \\boldsymbol などの動的ロードで "MathJax retry" が出て同期変換に失敗する。
+  loader: { load: ['input/tex-full', 'output/svg'] },
   svg: { fontCache: 'none' },
 }).then((MathJax) => {
   const items = JSON.parse(fs.readFileSync(0, 'utf8'));
