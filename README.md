@@ -36,6 +36,17 @@ SKILL.md は特定のエージェントに依存しない手順書で、ビル�
 
 読みやすさを上げるため、地の文の推敲に [nanaism/yomiyasu](https://github.com/nanaism/yomiyasu)（MIT License）を使うことができる。導入は `npx skills add nanaism/yomiyasu`。数式・コード・表・`:::` ブロック・見出し構造は対象外で、衝突する方針は本スキルの規約を優先する（詳細は SKILL.md の「文章推敲」）。yomiyasu を使って作った教科書は、その README の「特徴」に使用した旨を記載する。本スキル自体は yomiyasu を同梱しておらず、未導入でも動作する。
 
+### サンプル（yomiyasu ON/OFF の比較）
+
+[examples/](examples) に、同じ内容の最小サンプル（2編・数式18個・例題ブロック付き）を2通り置いている。各ディレクトリで `python3 build_pdf.py` を実行すると PDF を再生成できる。
+
+| ディレクトリ | 内容 |
+|---|---|
+| [examples/yomiyasu-off/](examples/yomiyasu-off/) | AI調の下書きそのまま（擬人表現・比喩動詞・文末コロン・絵文字を含む） |
+| [examples/yomiyasu-on/](examples/yomiyasu-on/) | yomiyasu のルールを適用して書き直したもの。数式・コード・表・例題ブロックは同一 |
+
+ON 側の書き直しは yomiyasu のルールを手作業で適用したもので、実際の yomiyasu の出力とは差が出る場合がある。リンターのスコアは OFF が 63/100、ON が 80/100。
+
 ## 生成される教科書の構成
 
 スキルは 1 冊ごとに次の形のリポジトリを作る。
