@@ -1,6 +1,6 @@
 # textbook — 日本語教科書ドキュメント作成スキル
 
-Claude Code 用のスキル。日本語の教科書的ドキュメントを Markdown ソース + WeasyPrint 製 PDF として新規作成・増補する。LaTeX 数式（MathJax → SVG）と、数研出版チャート式に倣った例題ブロック（例題／指針／解答／検討／練習）に対応。
+Claude Code 用のスキル（Codex CLI・Grok などの他エージェントでも利用可。後述）。日本語の教科書的ドキュメントを Markdown ソース + WeasyPrint 製 PDF として新規作成・増補する。LaTeX 数式（MathJax → SVG）と、数研出版チャート式に倣った例題ブロック（例題／指針／解答／検討／練習）に対応。
 
 「〜の教科書を作って」「〜を体系的に学べる資料を作って」「〜の教科書に章を追加して」といったリクエストで発動する。
 
@@ -9,6 +9,7 @@ Claude Code 用のスキル。日本語の教科書的ドキュメントを Mark
 | ファイル | 内容 |
 |---|---|
 | [SKILL.md](SKILL.md) | スキル本体。ワークフロー・執筆規約・演習問題の書式・ビルド環境・トラブルシュートを定義 |
+| [AGENTS.md](AGENTS.md) | Codex など AGENTS.md を読むエージェント向けの入口。SKILL.md への案内 |
 | [templates/build_pdf.py](templates/build_pdf.py) | ビルドスクリプトの雛形。教科書ごとに冒頭の設定ブロック（TITLE / HEADER / OUT_NAME / 表紙）だけ書き換えて使う |
 
 ## インストール
@@ -18,6 +19,22 @@ git clone <このリポジトリ> ~/.claude/skills/textbook
 ```
 
 ユーザーレベルのスキルとして `~/.claude/skills/textbook/` に置くと、Claude Code が自動で認識する。
+
+### Codex CLI・Grok など他のエージェントで使う
+
+SKILL.md は特定のエージェントに依存しない手順書で、ビルドも通常のシェルコマンドだけで完結する。
+
+| エージェント | 使い方 |
+|---|---|
+| Claude Code | `~/.claude/skills/textbook/` に置くと自動認識 |
+| Codex CLI | リポジトリを任意の場所に clone し、プロジェクトの `AGENTS.md` から本リポジトリの `AGENTS.md` / `SKILL.md` を参照させる（または `~/.codex/` 配下に置いて指示する） |
+| Grok その他 | 「`<パス>/SKILL.md` に従って〜の教科書を作って」と指示して読ませる |
+
+自動発動（フロントマターの description によるトリガー）は Claude Code の機能のため、他のエージェントでは明示的に SKILL.md を指定する。
+
+## 文章推敲に yomiyasu を使用（任意）
+
+読みやすさを上げるため、地の文の推敲に [nanaism/yomiyasu](https://github.com/nanaism/yomiyasu)（MIT License）を使うことができる。導入は `npx skills add nanaism/yomiyasu`。数式・コード・表・`:::` ブロック・見出し構造は対象外で、衝突する方針は本スキルの規約を優先する（詳細は SKILL.md の「文章推敲」）。yomiyasu を使って作った教科書は、その README の「特徴」に使用した旨を記載する。本スキル自体は yomiyasu を同梱しておらず、未導入でも動作する。
 
 ## 生成される教科書の構成
 
