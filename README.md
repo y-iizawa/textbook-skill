@@ -34,7 +34,7 @@ SKILL.md は特定のエージェントに依存しない手順書で、ビル�
 
 ## 文章推敲に yomiyasu を使用（任意）
 
-読みやすさを上げるため、地の文の推敲に [nanaism/yomiyasu](https://github.com/nanaism/yomiyasu)（MIT License）を使うことができる。導入は `npx skills add nanaism/yomiyasu`。数式・コード・表・`:::` ブロック・見出し構造は対象外で、衝突する方針は本スキルの規約を優先する（詳細は SKILL.md の「文章推敲」）。yomiyasu を使って作った教科書は、その README の「特徴」に使用した旨を記載する。本スキル自体は yomiyasu を同梱しておらず、未導入でも動作する。
+読みやすさを上げるため、地の文の推敲に [nanaism/yomiyasu](https://github.com/nanaism/yomiyasu)（MIT License）を使うことができる。導入は `npx skills add nanaism/yomiyasu`（実体は `~/.agents/skills/yomiyasu/` に入り、`~/.claude/skills/yomiyasu` から symlink される）。数式・コード・表・`:::` ブロック・見出し構造は対象外で、衝突する方針は本スキルの規約を優先する（詳細は SKILL.md の「文章推敲」）。yomiyasu を使って作った教科書は、その README の「特徴」に使用した旨を記載する。本スキル自体は yomiyasu を同梱しておらず、未導入でも動作する。
 
 ### サンプル（yomiyasu ON/OFF の比較）
 
@@ -45,7 +45,7 @@ SKILL.md は特定のエージェントに依存しない手順書で、ビル�
 | [examples/yomiyasu-off/](examples/yomiyasu-off/) | AI調の下書きそのまま（擬人表現・比喩動詞・文末コロン・絵文字を含む） |
 | [examples/yomiyasu-on/](examples/yomiyasu-on/) | yomiyasu のルールを適用して書き直したもの。数式・コード・表・例題ブロックは同一 |
 
-ON 側の書き直しは yomiyasu のルールを手作業で適用したもので、実際の yomiyasu の出力とは差が出る場合がある。リンターのスコアは OFF が 63/100、ON が 80/100。
+ON 側の書き直しは yomiyasu のルールを手作業で適用したもので、実際の yomiyasu の出力とは差が出る場合がある。`yomiyasu_lint.py`（v2.1.3）の見直し候補は、OFF が 6 件 / 4 件、ON が 2 件 / 2 件（基礎編 / 応用編）。ON に残る 2 件はどちらも見出しの「 — 」に対する `dash_decoration` で、教科書の規約として意図的に残している。候補の件数は品質の合否ではない。
 
 ## 生成される教科書の構成
 
